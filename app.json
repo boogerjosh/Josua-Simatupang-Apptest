@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "Josua_Simatupang_Apptest",
+    "slug": "Josua_Simatupang_Apptest"
+  }
+}
