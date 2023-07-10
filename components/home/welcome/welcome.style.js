@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    marginTop: SIZES.large,
+    marginTop: SIZES.small,
     height: 50,
   },
   searchWrapper: {
