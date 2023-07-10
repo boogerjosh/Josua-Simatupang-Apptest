@@ -1,10 +1,10 @@
 import { 
   View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl
  } from 'react-native';
- import { Stack, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+ import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
  import { useCallback, useState } from 'react';
 
- import { ScreenHeaderBtn, User, UserTabs  } from '../../components';
+ import { ScreenHeaderBtn, User, UserTabs } from '../../components';
  import {COLORS, FONT, icons, SIZES} from '../../constants';
  import useFetch from '../../hook/useFetch';
 
@@ -23,7 +23,7 @@ const ContactDetails = () => {
         options={{
           headerShadowVisible: false,
           headerLeft: () => (
-            <View style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
               <ScreenHeaderBtn
                 iconUrl={icons.left}
                 dimension="68%"
@@ -33,7 +33,7 @@ const ContactDetails = () => {
             </View>
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={icons.edit} dimension="70%"/>
+            <ScreenHeaderBtn iconUrl={icons.edit} dimension="70%" handlePress={() => router.push(`/edit/${params.id}`)}/>
           ),
           headerTitle: "",
           headerStyle: {backgroundColor: COLORS.tertiary}
