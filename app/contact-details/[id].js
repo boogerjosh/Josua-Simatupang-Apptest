@@ -4,7 +4,7 @@ import {
  import { Stack, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
  import { useCallback, useState } from 'react';
 
- import { ScreenHeaderBtn,  } from '../../components';
+ import { ScreenHeaderBtn, User, UserTabs  } from '../../components';
  import {COLORS, FONT, icons, SIZES} from '../../constants';
  import useFetch from '../../hook/useFetch';
 
@@ -21,7 +21,6 @@ const ContactDetails = () => {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
       <Stack.Screen
         options={{
-          headerStyle: { backgroundColor: COLORS.lightWhite},
           headerShadowVisible: false,
           headerLeft: () => (
             <View style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
@@ -30,13 +29,14 @@ const ContactDetails = () => {
                 dimension="68%"
                 handlePress={() => router.back()}
               />
-              <Text style={{marginLeft: 6, fontSize: SIZES.large, fontFamily: FONT.medium}}>Contacts</Text>
+              <Text style={{marginLeft: 6, fontSize: SIZES.large, fontFamily: FONT.small, color: COLORS.white}}>Contacts</Text>
             </View>
           ),
           headerRight: () => (
             <ScreenHeaderBtn iconUrl={icons.edit} dimension="70%"/>
           ),
-          headerTitle: ""
+          headerTitle: "",
+          headerStyle: {backgroundColor: COLORS.tertiary}
         }}
       />
       
@@ -51,7 +51,13 @@ const ContactDetails = () => {
               <Text>No data</Text>
             ) : (
               <View style={{padding: SIZES.medium, paddingBottom: 100}}>
+                <User
+                  userPhoto={data?.photo}
+                  userName={`${data?.firstName} ${data?.lastName}`}
+                  userAge={data?.age}
+                />
 
+                <UserTabs/>
               </View>
             )
           }

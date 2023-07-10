@@ -14,7 +14,7 @@ const ContactCard = ({ contact, handleNavigate }) => {
         <Image
           source={{uri: checkImageURL(contact.photo)
             ? contact.photo 
-            : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930'
+            : 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png'
           }}
           resizeMode="contain"
           style={styles.photoImage}
