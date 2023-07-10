@@ -23,7 +23,7 @@ const Contacts = () => {
             <ContactCard
               contact={contact}
               key={contact.id}
-              handleNavigate={() => router.push(`/contact/${contact.id}`)}
+              handleNavigate={() => router.push(`/contact-details/${contact.id}`)}
             />
           ))
         )}

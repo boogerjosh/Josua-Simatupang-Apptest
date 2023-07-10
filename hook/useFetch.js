@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const useFetch = (method, endpoint) => {
-  console.log(method, endpoint)
-  const [data, setData] = useState([]);
+
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -23,18 +23,20 @@ const useFetch = (method, endpoint) => {
 
     try {
       const response = await axios.request(options);
-      setData(response.data.data.sort((a, b) => {
-        const nameA = a.firstName.toLowerCase();
-        const nameB = b.firstName.toLowerCase();
+      // setData(response.data.data.sort((a, b) => {
+      //   const nameA = a.firstName.toLowerCase();
+      //   const nameB = b.firstName.toLowerCase();
       
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      }));
+      //   if (nameA < nameB) {
+      //     return -1;
+      //   }
+      //   if (nameA > nameB) {
+      //     return 1;
+      //   }
+      //   return 0;
+      // }));
+      console.log(response.data.data)
+      setData(response.data.data)
       setIsLoading(false);
     } catch (error) {
       setError(error);

@@ -1,14 +1,14 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import styles from './company.style'
+import styles from './user.style'
 
-const Company = () => {
+const User = () => {
   return (
     <View>
-      <Text>Company</Text>
+      <Text>User</Text>
     </View>
   )
 }
 
-export default Company
+export default User
