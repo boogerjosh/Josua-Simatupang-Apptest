@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
   },
-  logoContainer: {
+  photoContainer: {
     width: 50,
     height: 50,
     backgroundColor: COLORS.white,
@@ -22,26 +22,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  logImage: {
-    width: "70%",
-    height: "70%",
+  photoImage: {
+    width: "100%",
+    borderRadius: SIZES.medium,
+    height: "100%"
   },
   textContainer: {
     flex: 1,
     marginHorizontal: SIZES.medium,
   },
-  jobName: {
+  userName: {
     fontSize: SIZES.medium,
     fontFamily: "DMBold",
     color: COLORS.primary,
-  },
-  jobType: {
-    fontSize: SIZES.small + 2,
-    fontFamily: "DMRegular",
-    color: COLORS.gray,
-    marginTop: 3,
-    textTransform: "capitalize",
-  },
+  }
 });
 
 export default styles;

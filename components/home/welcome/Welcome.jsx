@@ -26,7 +26,7 @@ const Welcome = () => {
             style={styles.searchInput}
             value=""
             onChange={() => {}}
-            placeholder="placeholder text"
+            placeholder="Search contact..."
           />
         </View>
 
