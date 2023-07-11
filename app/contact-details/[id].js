@@ -58,7 +58,7 @@ const ContactDetails = () => {
                 <User
                   userPhoto={data?.photo}
                   userName={`${data?.firstName} ${data?.lastName}`}
-                  userAge={data?.age}
+                  userAge={data?.age.toString()}
                 />
 
                 <UserTabs/>

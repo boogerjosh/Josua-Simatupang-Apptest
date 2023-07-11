@@ -16,18 +16,41 @@ const CreateNew = () => {
     photo: '',
     firstName: '',
     lastName: '',
-    age: 0
+    age: ''
    })
 
-   const onRefresh = () => {};
-
    const handleInput = (key, value) => {
-    console.log(value, 'value', key);
-    setInputValue(prevState => ({
-      ...prevState,
-      [key]: value
-    }));
-  };
+        if (key !== 'age') {
+            const text = value.nativeEvent.text;
+            setInputValue(prevState => ({
+                ...prevState,
+                [key]: text
+            }));
+
+            if (text === '') {
+                setDisabledButton(true)
+            } else {
+                setDisabledButton(false)
+            }
+        } else {
+            setInputValue(prevState => ({
+                ...prevState,
+                ['age']: value
+            }));
+
+            if (value === '') {
+                setDisabledButton(true)
+            } else {
+                setDisabledButton(false)
+            }
+        }
+   };
+
+   const onSubmit = () => {
+    console.log(inputValue);
+   }
+
+  const onRefresh = () => {};
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
@@ -42,7 +65,7 @@ const CreateNew = () => {
               </View>
               <Text style={{ fontSize: SIZES.large, fontFamily: FONT.medium, color: COLORS.white }}>New Contact</Text>
               <View style={{ paddingHorizontal: 16 }}>
-                <TouchableOpacity disabled={disabledButton} style={{}}>
+                <TouchableOpacity disabled={disabledButton} onPress={onSubmit}>
                   <Text style={{ fontSize: SIZES.large, fontFamily: FONT.medium, color: disabledButton ? COLORS.gray : COLORS.white }}>Done</Text>
                 </TouchableOpacity>
               </View>
@@ -60,7 +83,7 @@ const CreateNew = () => {
                 firstName={inputValue.firstName} 
                 lastName={inputValue.lastName}
                 userAge={inputValue.age}
-                handleInput={handleInput}    
+                handleInput={handleInput}
             />
         </View>
       </ScrollView>

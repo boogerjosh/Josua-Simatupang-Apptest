@@ -3,22 +3,67 @@ import {
     RefreshControl, TouchableOpacity, Modal, Pressable, StyleSheet
 } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { InputComponent, DeleteButton } from '../../components';
 import {COLORS, FONT, SIZES} from '../../constants';
 import useFetch from '../../hook/useFetch';
 
 const EditSection = () => {
-   const params = useLocalSearchParams();
-   const router = useRouter();
+    const params = useLocalSearchParams();
+    const router = useRouter();
+    const [refreshing, setRefreshing] = useState(false);
+    const [disabledButton, setDisabledButton] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
 
-   const {data, isLoading, error, refetch} = useFetch("GET", `contact/${params.id}`);
-   const [refreshing, setRefreshing] = useState(false);
-   const [disabledButton, setDisabledButton] = useState(true);
-   const [modalVisible, setModalVisible] = useState(false);
+    const onRefresh = () => {};
+    
+    const {data, isLoading, error, refetch} = useFetch("GET", `contact/${params.id}`);
+    const [inputValue, setInputValue] = useState({
+        photo: '',
+        firstName: '',
+        lastName: '',
+        age: ''
+    });
 
-   const onRefresh = () => {};
+    useEffect(() => {
+        if (!isLoading && !error && data) {
+          setInputValue({
+            photo: data?.photo || '',
+            firstName: data?.firstName || '',
+            lastName: data?.lastName || '',
+            age: data?.age.toString() || ''
+          });
+        }
+    }, [isLoading, error, data]);
+    
+
+    const handleInput = (key, value) => {
+        if (key !== 'age') {
+            const text = value.nativeEvent.text;
+            setInputValue(prevState => ({
+                ...prevState,
+                [key]: text
+            }));
+
+            if (text === '') {
+                setDisabledButton(true)
+            } else {
+                setDisabledButton(false)
+            }
+        } else {
+            setInputValue(prevState => ({
+                ...prevState,
+                ['age']: value
+            }));
+
+            if (value === '') {
+                setDisabledButton(true)
+            } else {
+                setDisabledButton(false)
+            }
+        }
+    };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
@@ -80,10 +125,11 @@ const EditSection = () => {
                   </Modal>
 
                  <InputComponent 
-                    userPhoto={data?.photo}
-                    firstName={data?.firstName} 
-                    lastName={data?.lastName}
-                    userAge={data?.age}
+                    userPhoto={inputValue.photo}
+                    firstName={inputValue.firstName} 
+                    lastName={inputValue.lastName}
+                    userAge={inputValue.age.toString()}
+                    handleInput={handleInput} 
                  />
 
                  <DeleteButton onHandle={() => setModalVisible(true)}/>

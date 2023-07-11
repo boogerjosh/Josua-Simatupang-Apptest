@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 
 import styles from './welcome.style';
-import { icons, SIZES } from '../../../constants';
+import { icons, COLORS } from '../../../constants';
 
 const Welcome = () => {
   const router = useRouter();
@@ -26,7 +26,8 @@ const Welcome = () => {
             style={styles.searchInput}
             value=""
             onChange={() => {}}
-            placeholder="Search contact..."
+            placeholder="Search contact"
+            placeholderTextColor={COLORS.gray}
           />
         </View>
 

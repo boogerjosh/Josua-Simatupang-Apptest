@@ -6,6 +6,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "expo": "^48.0.7",
     "expo-asset": "~8.9.1",
@@ -24,11 +25,13 @@
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-web": "~0.18.7",
-    "react-redux": "^8.1.1"
+    "react-redux": "^8.1.1",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "@babel/plugin-proposal-export-namespace-from": "^7.18.9"
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@types/react-redux": "^7.1.25"
   },
   "resolutions": {
     "metro": "^0.73.7",

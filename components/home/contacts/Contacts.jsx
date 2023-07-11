@@ -1,15 +1,21 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import styles from './contacts.style';
 import { COLORS } from '../../../constants';
 import ContactCard from '../../common/cards/contact/ContactCard';
-import useFetch from '../../../hook/useFetch';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from '../../../store/usersActions';
 
 const Contacts = () => {
   const router = useRouter();
-  const {data, isLoading, error} = useFetch('GET', 'contact');
+  const dispatch = useDispatch();
+  const {users, isLoading, error} = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
@@ -19,7 +25,7 @@ const Contacts = () => {
         ) : error ? (
           <Text>Something went wrong</Text>
         ) : (
-          data?.map((contact) => (
+          users?.map((contact) => (
             <ContactCard
               contact={contact}
               key={contact.id}
