@@ -8,18 +8,24 @@ import {
 } from '../components';
 
 const Home = () => {
+    const router = useRouter();
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
             <Stack.Screen
                 options={{
+                    header: () => (
+                        <View style={{ backgroundColor: COLORS.tertiary, paddingTop: 50, paddingBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <View style={{ paddingHorizontal: 16 }}>
+                            <ScreenHeaderBtn iconUrl={icons.menu} dimension="70%"/>
+                          </View>
+                          <View style={{ paddingHorizontal: 16 }}>
+                            <ScreenHeaderBtn iconUrl={icons.add} dimension="70%" handlePress={() => router.push(`/createnew`)}/>
+                          </View>
+                        </View>
+                    ),
                     headerStyle: {backgroundColor: COLORS.tertiary},
                     headerShadowVisible: false,
-                    headerLeft: () => (
-                        <ScreenHeaderBtn iconUrl={icons.menu} dimension="70%"/>
-                    ),
-                    headerRight: () => (
-                        <ScreenHeaderBtn iconUrl={icons.add} dimension="70%"/>
-                    ),
                     headerTitle: "",
                 }}
             />

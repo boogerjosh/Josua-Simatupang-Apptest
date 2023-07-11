@@ -21,20 +21,24 @@ const ContactDetails = () => {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
       <Stack.Screen
         options={{
-          headerShadowVisible: false,
-          headerLeft: () => (
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-              <ScreenHeaderBtn
-                iconUrl={icons.left}
-                dimension="68%"
-                handlePress={() => router.back()}
-              />
-              <Text style={{marginLeft: 6, fontSize: SIZES.large, fontFamily: FONT.small, color: COLORS.white}}>Contacts</Text>
+          header: () => (
+            <View style={{ backgroundColor: COLORS.tertiary, paddingTop: 50, paddingBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <View style={{ paddingHorizontal: 16 }}>
+                <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                  <ScreenHeaderBtn
+                    iconUrl={icons.left}
+                    dimension="68%"
+                    handlePress={() => router.back()}
+                  />
+                <Text style={{marginLeft: 6, fontSize: SIZES.large, fontFamily: FONT.small, color: COLORS.white}}>Contacts</Text>
+                </View>
+              </View>
+              <View style={{ paddingHorizontal: 16 }}>
+                <ScreenHeaderBtn iconUrl={icons.edit} dimension="70%" handlePress={() => router.push(`/edit/${params.id}`)}/>
+              </View>
             </View>
           ),
-          headerRight: () => (
-            <ScreenHeaderBtn iconUrl={icons.edit} dimension="70%" handlePress={() => router.push(`/edit/${params.id}`)}/>
-          ),
+          headerShadowVisible: false,
           headerTitle: "",
           headerStyle: {backgroundColor: COLORS.tertiary}
         }}

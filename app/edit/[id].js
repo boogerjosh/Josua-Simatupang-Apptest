@@ -1,5 +1,6 @@
 import { 
-    View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity
+    View, Text, SafeAreaView, ScrollView, ActivityIndicator, 
+    RefreshControl, TouchableOpacity, Modal, Pressable, StyleSheet
 } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
@@ -15,6 +16,7 @@ const EditSection = () => {
    const {data, isLoading, error, refetch} = useFetch("GET", `contact/${params.id}`);
    const [refreshing, setRefreshing] = useState(false);
    const [disabledButton, setDisabledButton] = useState(true);
+   const [modalVisible, setModalVisible] = useState(false);
 
    const onRefresh = () => {};
 
@@ -22,17 +24,21 @@ const EditSection = () => {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
       <Stack.Screen
         options={{
+          header: () => (
+            <View style={{ backgroundColor: COLORS.tertiary, paddingTop: 50, paddingBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ paddingHorizontal: 16 }}>
+                    <TouchableOpacity onPress={() => router.back()}>
+                        <Text style={{fontSize: SIZES.large, fontFamily: FONT.small, color: COLORS.white}}>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ paddingHorizontal: 16 }}>
+                    <TouchableOpacity disabled={disabledButton} style={{}}>
+                        <Text style={{fontSize: SIZES.large, fontFamily: FONT.medium, color: disabledButton ? COLORS.gray : COLORS.white}}>Done</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+          ),
           headerShadowVisible: false,
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
-              <Text style={{fontSize: SIZES.large, fontFamily: FONT.small, color: COLORS.white}}>Cancel</Text>
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <TouchableOpacity disabled={disabledButton} style={{}}>
-                <Text style={{fontSize: SIZES.large, fontFamily: FONT.medium, color: disabledButton ? COLORS.gray : COLORS.white}}>Done</Text>
-            </TouchableOpacity>
-          ),
           headerTitle: "",
           headerStyle: {backgroundColor: COLORS.tertiary}
         }}
@@ -49,6 +55,30 @@ const EditSection = () => {
               <Text>No data</Text>
             ) : (
               <View style={{padding: SIZES.medium, paddingBottom: 100}}>
+                 <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.');
+                        setModalVisible(!modalVisible);
+                    }}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Pressable
+                            style={[styles.button, styles.buttonDelete]}
+                            onPress={() => {}}>
+                                <Text style={styles.textStyle}>Delete Contact</Text>
+                            </Pressable>
+                            <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles.textStyle}>Cancel</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                  </Modal>
+
                  <InputComponent 
                     userPhoto={data?.photo}
                     firstName={data?.firstName} 
@@ -56,7 +86,7 @@ const EditSection = () => {
                     userAge={data?.age}
                  />
 
-                 <DeleteButton/>
+                 <DeleteButton onHandle={() => setModalVisible(true)}/>
               </View>
             )
           }
@@ -65,5 +95,53 @@ const EditSection = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 22,
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: 'white',
+      borderRadius: 20,
+      width: 300,
+      padding: 25,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    button: {
+      width: '100%',
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2,
+    },
+    buttonDelete: {
+      marginBottom: 10,
+      backgroundColor: COLORS.red,
+    },
+    buttonClose: {
+      backgroundColor: COLORS.tertiary
+    },
+    textStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+  });
+  
 
 export default EditSection

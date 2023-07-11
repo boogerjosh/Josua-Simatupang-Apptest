@@ -35,7 +35,6 @@ const useFetch = (method, endpoint) => {
       //   }
       //   return 0;
       // }));
-      console.log(response.data.data)
       setData(response.data.data)
       setIsLoading(false);
     } catch (error) {
