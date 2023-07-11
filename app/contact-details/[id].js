@@ -2,7 +2,7 @@ import {
   View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl
  } from 'react-native';
  import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
- import { useState, useEffect } from 'react';
+ import { useState, useEffect, useCallback } from 'react';
  import { useDispatch, useSelector } from "react-redux";
 
  import { ScreenHeaderBtn, User, UserTabs } from '../../components';
@@ -20,7 +20,11 @@ const ContactDetails = () => {
     dispatch(fetchUsersById(params.id));
   }, [dispatch]);
 
-  const onRefresh = () => {};
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+      dispatch(fetchUsersById(params.id));
+    setRefreshing(false);
+  }, [])
   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>

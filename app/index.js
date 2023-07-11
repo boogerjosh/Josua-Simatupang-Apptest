@@ -8,7 +8,6 @@ import {
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../store/usersActions";
-import { setUsersSuccess } from "../store/usersReducer";
 
 const Home = () => {
     const router = useRouter();

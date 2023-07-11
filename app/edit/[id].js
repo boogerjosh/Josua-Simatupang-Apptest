@@ -1,6 +1,5 @@
 import { 
-    View, Text, SafeAreaView, ScrollView, ActivityIndicator, 
-    RefreshControl, TouchableOpacity, Modal, Pressable, StyleSheet
+    View, Text, SafeAreaView, ScrollView, ActivityIndicator, TouchableOpacity, Modal, Pressable, StyleSheet
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
@@ -25,8 +24,6 @@ const EditSection = () => {
     })
 
     const { photo, firstName, lastName, age } = inputValue;
-
-    const onRefresh = () => {};
     
     useEffect(() => {
         if (!isLoading && !error && user) {
@@ -109,7 +106,7 @@ const EditSection = () => {
       />
       
       <>
-        <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {
             isLoading ? (
             <ActivityIndicator size="large" color={COLORS.primary}/>
