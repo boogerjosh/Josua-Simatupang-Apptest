@@ -2,7 +2,7 @@ import ScreenHeaderBtn from "./common/header/ScreenHeaderBtn";
 import InputComponent from "./common/inputcomponent/InputComponent";
 
 // home screen
-import Welcome from "./home/welcome/Welcome";
+import SearchSection from "./home/search/SearchSection";
 import Contacts from "./home/contacts/Contacts";
 
 // user details screen
@@ -15,7 +15,7 @@ import ContactCard from "./common/cards/contact/ContactCard";
 
 export {
   ScreenHeaderBtn,
-  Welcome,
+  SearchSection,
   Contacts,
   User,
   UserTabs,

@@ -1,8 +1,6 @@
 import { setUsersSuccessById, setUsersStart, setUsersSuccess, setUsersFailure } from "./usersReducer";
 import axios from "axios";
 import { useRouter } from 'expo-router';
-import { Alert } from "react-native";
-
 
 export const fetchUsers = () => async (dispatch) => {
     const options = {
@@ -18,6 +16,7 @@ export const fetchUsers = () => async (dispatch) => {
     dispatch(setUsersStart());
     try {
       const response = await axios.request(options);
+      const sortByAbjad = 
       dispatch(setUsersSuccess(response.data.data));
     } catch (error) {
       dispatch(setUsersFailure(error));
@@ -64,6 +63,7 @@ export const deleteUserById = (id) => async (dispatch) => {
       }
     } catch (error) {
       console.log(error);
+      alert(error);
       // dispatch(setUsersFailure(error));
       // Alert.alert('Error', error);
     }

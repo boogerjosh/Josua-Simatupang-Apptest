@@ -100,7 +100,7 @@ const EditSection = () => {
             <View style={{ backgroundColor: COLORS.tertiary, paddingTop: 50, paddingBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <View style={{ paddingHorizontal: 16 }}>
                     <TouchableOpacity onPress={() => router.back()}>
-                        <Text style={{fontSize: SIZES.large, fontFamily: FONT.small, color: COLORS.white}}>Cancel</Text>
+                        <Text style={{fontSize: SIZES.large, fontFamily: FONT.medium, color: COLORS.white}}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ paddingHorizontal: 16 }}>

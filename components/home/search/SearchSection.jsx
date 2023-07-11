@@ -8,29 +8,29 @@ import {
 } from 'react-native'
 import { useRouter } from 'expo-router';
 
-import styles from './welcome.style';
+import styles from './searchsection.style';
 import { icons, COLORS } from '../../../constants';
 
-const Welcome = () => {
+const SearchSection = ({searchTerm, handleBtnSearch, handleInput}) => {
   const router = useRouter();
 
   return (
     <View>
       <View style={styles.container}>
-        <Text style={styles.welcomeMessage}>Contacts</Text>
+        <Text style={styles.contactsTitile}>Contacts</Text>
       </View>
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
           <TextInput
             style={styles.searchInput}
-            value=""
-            onChange={() => {}}
+            value={searchTerm}
+            onChange={value => handleInput(value)}
             placeholder="Search contact"
             placeholderTextColor={COLORS.gray}
           />
         </View>
 
-        <TouchableOpacity style={styles.searchBtn} onPress={() => {}}>
+        <TouchableOpacity style={styles.searchBtn} onPress={handleBtnSearch}>
           <Image
             source={icons.search}
             resizeMode="contain"
@@ -42,4 +42,4 @@ const Welcome = () => {
   )
 }
 
-export default Welcome
+export default SearchSection

@@ -5,17 +5,9 @@ import { useRouter } from 'expo-router';
 import styles from './contacts.style';
 import { COLORS } from '../../../constants';
 import ContactCard from '../../common/cards/contact/ContactCard';
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from '../../../store/usersActions';
 
-const Contacts = () => {
+const Contacts = ({users, isLoading, error}) => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const {users, isLoading, error} = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   return (
     <View style={styles.container}>
