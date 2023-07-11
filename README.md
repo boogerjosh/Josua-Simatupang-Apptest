@@ -1,5 +1,7 @@
 # Contacts-App-React-Native
 
+![Untitled design (1)](https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/eccf316f-ba66-46b9-94d8-9a733fd2b1ba)
+
 ## Get Started
 
 install dev dependencies
