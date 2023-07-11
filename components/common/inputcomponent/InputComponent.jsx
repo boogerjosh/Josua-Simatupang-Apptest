@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import { Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 import styles from './inputcomponent.style';
 import { checkImageURL } from '../../../utils';
@@ -25,8 +26,19 @@ const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
     });
 
     if (!result.canceled) {
-      uploadImage(result.uri);
+      const compressedImage = await compressImage(result.uri);
+      uploadImage(compressedImage);
     }
+  };
+
+  const compressImage = async (imageUri) => {
+    const manipResult = await ImageManipulator.manipulateAsync(
+      imageUri,
+      [{ resize: { width: 300 } }],
+      { compress: 0.3, format: ImageManipulator.SaveFormat.JPEG }
+    );
+  
+    return manipResult.uri;
   };
 
   const uploadImage = async (imageUri) => {
@@ -41,7 +53,6 @@ const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
   
       setImage(downloadURL);
       onImageUpload('photo', downloadURL);
-      Alert.alert('Foto berhasil diunggah!');
     } catch (error) {
       console.log('Terjadi kesalahan saat mengunggah gambar:', error.message);
     }
