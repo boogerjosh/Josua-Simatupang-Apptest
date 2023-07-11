@@ -2,21 +2,26 @@ import {
   View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl
  } from 'react-native';
  import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
- import { useCallback, useState } from 'react';
+ import { useState, useEffect } from 'react';
+ import { useDispatch, useSelector } from "react-redux";
 
  import { ScreenHeaderBtn, User, UserTabs } from '../../components';
  import {COLORS, FONT, icons, SIZES} from '../../constants';
- import useFetch from '../../hook/useFetch';
+ import { fetchUsersById } from '../../store/usersActions';
 
 const ContactDetails = () => {
   const params = useLocalSearchParams();
   const router = useRouter();
-
+  const dispatch = useDispatch();
+  const {user, isLoading, error} = useSelector((state) => state.users);
   const [refreshing, setRefreshing] = useState(false);
-  const {data, isLoading, error, refetch} = useFetch("GET", `contact/${params.id}`);
+
+  useEffect(() => {
+    dispatch(fetchUsersById(params.id));
+  }, [dispatch]);
 
   const onRefresh = () => {};
-
+  
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
       <Stack.Screen
@@ -56,11 +61,10 @@ const ContactDetails = () => {
             ) : (
               <View style={{padding: SIZES.medium, paddingBottom: 100}}>
                 <User
-                  userPhoto={data?.photo}
-                  userName={`${data?.firstName} ${data?.lastName}`}
-                  userAge={data?.age.toString()}
+                  userPhoto={user?.photo}
+                  userName={`${user?.firstName} ${user?.lastName}`}
+                  userAge={user?.age?.toString()}
                 />
-
                 <UserTabs/>
               </View>
             )

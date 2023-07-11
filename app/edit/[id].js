@@ -2,23 +2,21 @@ import {
     View, Text, SafeAreaView, ScrollView, ActivityIndicator, 
     RefreshControl, TouchableOpacity, Modal, Pressable, StyleSheet
 } from 'react-native';
-import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 
 import { InputComponent, DeleteButton } from '../../components';
 import {COLORS, FONT, SIZES} from '../../constants';
-import useFetch from '../../hook/useFetch';
+import { updateUserById } from '../../store/usersActions';
 
 const EditSection = () => {
-    const params = useLocalSearchParams();
+    const dispatch = useDispatch();
     const router = useRouter();
     const [refreshing, setRefreshing] = useState(false);
     const [disabledButton, setDisabledButton] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
-
-    const onRefresh = () => {};
-    
-    const {data, isLoading, error, refetch} = useFetch("GET", `contact/${params.id}`);
+    const {user, isLoading, error} = useSelector((state) => state.users);
     const [inputValue, setInputValue] = useState({
         photo: '',
         firstName: '',
@@ -26,16 +24,18 @@ const EditSection = () => {
         age: ''
     });
 
+    const onRefresh = () => {};
+    
     useEffect(() => {
-        if (!isLoading && !error && data) {
+        if (!isLoading && !error && user) {
           setInputValue({
-            photo: data?.photo || '',
-            firstName: data?.firstName || '',
-            lastName: data?.lastName || '',
-            age: data?.age.toString() || ''
+            photo: user?.photo || '',
+            firstName: user?.firstName || '',
+            lastName: user?.lastName || '',
+            age: user?.age.toString() || ''
           });
         }
-    }, [isLoading, error, data]);
+    }, [isLoading, error, user]);
     
 
     const handleInput = (key, value) => {
@@ -65,6 +65,17 @@ const EditSection = () => {
         }
     };
 
+    const onSubmit = () => {
+        let editedUser = {
+            photo: "https://www.niagahoster.co.id/blog/wp-content/uploads/2020/02/Featured-Image-Cara-Mudah-Mengatasi-Error-400-Bad-Request-di-Website.png",
+            firstName: inputValue.firstName,
+            lastName: inputValue.lastName,
+            age: parseInt(inputValue.age)
+        }
+
+        dispatch(updateUserById(user?.id, JSON.stringify(editedUser)));
+    }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
       <Stack.Screen
@@ -77,7 +88,7 @@ const EditSection = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ paddingHorizontal: 16 }}>
-                    <TouchableOpacity disabled={disabledButton} style={{}}>
+                    <TouchableOpacity disabled={disabledButton} onPress={onSubmit}>
                         <Text style={{fontSize: SIZES.large, fontFamily: FONT.medium, color: disabledButton ? COLORS.gray : COLORS.white}}>Done</Text>
                     </TouchableOpacity>
                 </View>
