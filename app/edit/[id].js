@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { InputComponent, DeleteButton } from '../../components';
 import {COLORS, FONT, SIZES} from '../../constants';
-import { updateUserById } from '../../store/usersActions';
+import { updateUserById, deleteUserById  } from '../../store/usersActions';
 
 const EditSection = () => {
     const dispatch = useDispatch();
@@ -18,11 +18,11 @@ const EditSection = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const {user, isLoading, error} = useSelector((state) => state.users);
     const [inputValue, setInputValue] = useState({
-        photo: '',
-        firstName: '',
-        lastName: '',
-        age: ''
-    });
+      firstName: '',
+      lastName: '',
+      age: '',
+      photo: '',
+    })
 
     const onRefresh = () => {};
     
@@ -37,6 +37,16 @@ const EditSection = () => {
         }
     }, [isLoading, error, user]);
     
+
+    const onImageUpload = (key, imageUrl) => {
+      // Lakukan sesuatu dengan URL gambar yang sudah diunggah
+      setInputValue(prevState => ({
+        ...prevState,
+        [key]: imageUrl
+      }));
+      setDisabledButton(false);
+      // ...
+    };
 
     const handleInput = (key, value) => {
         if (key !== 'age') {
@@ -66,14 +76,20 @@ const EditSection = () => {
     };
 
     const onSubmit = () => {
-        let editedUser = {
-            photo: "https://www.niagahoster.co.id/blog/wp-content/uploads/2020/02/Featured-Image-Cara-Mudah-Mengatasi-Error-400-Bad-Request-di-Website.png",
-            firstName: inputValue.firstName,
-            lastName: inputValue.lastName,
-            age: parseInt(inputValue.age)
-        }
+      let dataEdited = {
+        firstName: inputValue.firstName,
+        lastName: inputValue.lastName,
+        age: inputValue.age,
+        photo: inputValue.photo
+      };
 
-        dispatch(updateUserById(user?.id, JSON.stringify(editedUser)));
+      dispatch(updateUserById(user?.id, dataEdited));
+
+      setDisabledButton(true);
+    }
+
+    const handleDelete = () => {
+      dispatch(deleteUserById(user?.id));
     }
 
   return (
@@ -123,7 +139,7 @@ const EditSection = () => {
                         <View style={styles.modalView}>
                             <Pressable
                             style={[styles.button, styles.buttonDelete]}
-                            onPress={() => {}}>
+                            onPress={handleDelete}>
                                 <Text style={styles.textStyle}>Delete Contact</Text>
                             </Pressable>
                             <Pressable
@@ -141,6 +157,7 @@ const EditSection = () => {
                     lastName={inputValue.lastName}
                     userAge={inputValue.age.toString()}
                     handleInput={handleInput} 
+                    onImageUpload={onImageUpload}
                  />
 
                  <DeleteButton onHandle={() => setModalVisible(true)}/>

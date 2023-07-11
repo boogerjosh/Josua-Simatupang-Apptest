@@ -1,5 +1,8 @@
 import { setUsersSuccessById, setUsersStart, setUsersSuccess, setUsersFailure } from "./usersReducer";
 import axios from "axios";
+import { useRouter } from 'expo-router';
+import { Alert } from "react-native";
+
 
 export const fetchUsers = () => async (dispatch) => {
     const options = {
@@ -42,30 +45,32 @@ export const fetchUsersById = (id) => async (dispatch) => {
     }
 };
 
-// export const deleteUserById = (id) => async (dispatch) => {
-//     const router = useRouter();
-//     const optionsById = {
-//         method: 'DELETE',
-//         maxBodyLength: Infinity,
-//         url: `https://contact.herokuapp.com/contact/${id}`,
-//         headers: {
-//           "Accept": 'application/json',
-//           "Content-Type": "application/json",
-//         },
-//     };
+export const deleteUserById = (id) => async (dispatch) => {
+    const router = useRouter();
+    const optionsById = {
+        method: 'DELETE',
+        url: `https://contact.herokuapp.com/contact/${id}`,
+        headers: {
+          "Accept": 'application/json',
+          "Content-Type": "application/json",
+        },
+    };
 
-//     dispatch(setUsersStart());
-//     try {
-//       const response = await axios.request(optionsById);
-//       if (response) {
-//           router.push('/');
-//       }
-//     } catch (error) {
-//       dispatch(setUsersFailure(error));
-//     }
-// };
+    // dispatch(setUsersStart());
+    try {
+      const response = await axios.request(optionsById);
+      if (response) {
+          router.push('/');
+      }
+    } catch (error) {
+      console.log(error);
+      // dispatch(setUsersFailure(error));
+      // Alert.alert('Error', error);
+    }
+};
 
 export const updateUserById = (id, payload) => async (dispatch) => {
+    const router = useRouter();
     const optionsById = {
         method: 'PUT',
         url: `https://contact.herokuapp.com/contact/${id}`,
@@ -76,12 +81,13 @@ export const updateUserById = (id, payload) => async (dispatch) => {
         data: payload
     };
 
-    dispatch(setUsersStart());
     try {
+      // dispatch(setUsersStart());
       const response = await axios.request(optionsById);
-      console.log(response)
       if (response) {
-        fetchUsersById(id);
+        dispatch(fetchUsersById(id));
+        dispatch(fetchUsers());
+        router.push(`/contact-details/${id}`);
       }
     } catch (error) {
       console.log(error);
@@ -90,7 +96,7 @@ export const updateUserById = (id, payload) => async (dispatch) => {
 };
 
 export const createNewContact = (payload) => async (dispatch) => {
-    console.log(payload);
+    const router = useRouter();
     const optionsPost = {
         method: "POST",
         url: `https://contact.herokuapp.com/contact`,
@@ -98,28 +104,18 @@ export const createNewContact = (payload) => async (dispatch) => {
           "Accept": 'application/json',
           "Content-Type": "application/json",
         },
-        data: {
-          "firstName": payload.firstName,
-          "lastName": payload.lastName,
-          "age": payload.age,
-          "photo": payload.photo
-        },
-        withCredentials: true
+        data: payload
     };
-
-    console.log(optionsPost);
     // dispatch(setUsersStart());
     try {
       const response = await axios.request(optionsPost);
-      console.log(response);
-      // console.log(response)
       if (response) {
         dispatch(fetchUsers());
         router.push('/');
       }
     } catch (error) {
       console.log(error);
-    //   dispatch(setUsersFailure(error));
+      dispatch(setUsersFailure(error));
     }
 };
 

@@ -18,14 +18,15 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: COLORS.white,
-    borderRadius: SIZES.medium,
+    borderRadius: SIZES.circle,
     justifyContent: "center",
     alignItems: "center",
   },
   photoImage: {
     width: "100%",
-    borderRadius: SIZES.medium,
-    height: "100%"
+    borderRadius: SIZES.circle,
+    height: "100%",
+    objectFit: 'cover'
   },
   textContainer: {
     flex: 1,

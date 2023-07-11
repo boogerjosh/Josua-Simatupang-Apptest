@@ -1,13 +1,13 @@
 import { 
-    View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity
+    View, Text, SafeAreaView, ScrollView, RefreshControl, TouchableOpacity
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { InputComponent } from '../../components';
 import {COLORS, FONT, SIZES} from '../../constants';
-import { createNewContact, fetchUsers } from '../../store/usersActions';
+import { createNewContact } from '../../store/usersActions';
 
 const CreateNew = () => {
    const router = useRouter();
@@ -18,57 +18,67 @@ const CreateNew = () => {
     firstName: '',
     lastName: '',
     age: '',
-    photo: '',
-   })
+    photo: '',  
+   });
+
+   const onImageUpload = (key, imageUrl) => {
+      // Lakukan sesuatu dengan URL gambar yang sudah diunggah
+      setInputValue(prevState => ({
+        ...prevState,
+        [key]: imageUrl
+      }));
+      setDisabledButton(false);
+      // ...
+   };
+  
 
    const handleInput = (key, value) => {
-        if (key !== 'age') {
-            const text = value.nativeEvent.text;
-            setInputValue(prevState => ({
-                ...prevState,
-                [key]: text
-            }));
+      if (key !== 'age') {
+          const text = value.nativeEvent.text;
+          setInputValue(prevState => ({
+              ...prevState,
+              [key]: text
+          }));
 
-            if (text === '') {
-                setDisabledButton(true)
-            } else {
-                setDisabledButton(false)
-            }
-        } else {
-            setInputValue(prevState => ({
-                ...prevState,
-                ['age']: value
-            }));
+          if (text === '') {
+              setDisabledButton(true)
+          } else {
+              setDisabledButton(false)
+          }
+      } else {
+          setInputValue(prevState => ({
+              ...prevState,
+              ['age']: value
+          }));
 
-            if (value === '') {
-                setDisabledButton(true)
-            } else {
-                setDisabledButton(false)
-            }
-        }
+          if (value === '') {
+              setDisabledButton(true)
+          } else {
+              setDisabledButton(false)
+          }
+      }
    };
 
    const onSubmit = () => {
-      console.log(inputValue);
-      // let newData = {
-      //   firstName: inputValue.firstName,
-      //   lastName: inputValue.lastName,
-      //   age: parseInt(inputValue.age),
-      //   photo: "http://vignette1.wikia.nocookie.net/lotr/images/6/68/Bilbo_baggins.jpg/revision/latest?cb=20130202022550"
-      // }
+      let newData = {
+        firstName: inputValue.firstName,
+        lastName: inputValue.lastName,
+        age: inputValue.age,
+        photo: inputValue.photo
+      };
 
-      // console.log(newData);
+      createNewContact(newData)
 
-      dispatch(createNewContact({...inputValue, photo: "http://vignette1.wikia.nocookie.net/lotr/images/6/68/Bilbo_baggins.jpg/revision/latest?cb=20130202022550"}));
+      dispatch(createNewContact(newData));
 
-      // setInputValue({
-      //   photo: "",
-      //   firstName: "",
-      //   lastName: "",
-      //   age: "",
-      // });
+      setInputValue({
+        photo: "",
+        firstName: "",
+        lastName: "",
+        age: "",
+      });
 
-      // setDisabledButton(true);
+      setDisabledButton(true);
    }
 
   const onRefresh = () => {};
@@ -105,6 +115,7 @@ const CreateNew = () => {
                   lastName={inputValue.lastName}
                   userAge={inputValue.age}
                   handleInput={handleInput}
+                  onImageUpload={onImageUpload}
               />
           </View>
         </ScrollView>
