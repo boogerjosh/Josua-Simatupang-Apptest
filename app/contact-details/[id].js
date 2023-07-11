@@ -53,7 +53,9 @@ const ContactDetails = () => {
         <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
           {
             isLoading ? (
-            <ActivityIndicator size="large" color={COLORS.primary}/>
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: '50%' }}>
+                <ActivityIndicator size="large" color={COLORS.primary} />
+              </View>
             ) : error ? (
               <Text>Something went wrong</Text>
             ) : data?.length === 0 ? (

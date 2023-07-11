@@ -18,8 +18,10 @@ const CreateNew = () => {
     firstName: '',
     lastName: '',
     age: '',
-    photo: '',  
+    photo: 'N/A',  
    });
+
+   const { photo, firstName, lastName, age } = inputValue;
 
    const onImageUpload = (key, imageUrl) => {
       // Lakukan sesuatu dengan URL gambar yang sudah diunggah
@@ -31,55 +33,43 @@ const CreateNew = () => {
       // ...
    };
   
-
    const handleInput = (key, value) => {
+      let inputValueToUpdate = value;
+    
       if (key !== 'age') {
-          const text = value.nativeEvent.text;
-          setInputValue(prevState => ({
-              ...prevState,
-              [key]: text
-          }));
-
-          if (text === '') {
-              setDisabledButton(true)
-          } else {
-              setDisabledButton(false)
-          }
-      } else {
-          setInputValue(prevState => ({
-              ...prevState,
-              ['age']: value
-          }));
-
-          if (value === '') {
-              setDisabledButton(true)
-          } else {
-              setDisabledButton(false)
-          }
+        const text = value.nativeEvent.text;
+        inputValueToUpdate = text;
       }
+    
+      setInputValue(prevState => ({
+        ...prevState,
+        [key]: inputValueToUpdate
+      }));
+    
+      const isDisabled = inputValueToUpdate === '';
+      setDisabledButton(isDisabled);
    };
 
    const onSubmit = () => {
-      let newData = {
-        firstName: inputValue.firstName,
-        lastName: inputValue.lastName,
-        age: inputValue.age,
-        photo: inputValue.photo
-      };
+    let newData = {
+      firstName,
+      lastName,
+      age,
+      photo
+    };
 
-      createNewContact(newData)
+    createNewContact(newData);
+    dispatch(createNewContact(newData));
 
-      dispatch(createNewContact(newData));
+    setInputValue({
+      photo: "",
+      firstName: "",
+      lastName: "",
+      age: "",
+    });
 
-      setInputValue({
-        photo: "",
-        firstName: "",
-        lastName: "",
-        age: "",
-      });
-
-      setDisabledButton(true);
-   }
+    setDisabledButton(true);
+  };
 
   const onRefresh = () => {};
 
@@ -109,14 +99,11 @@ const CreateNew = () => {
       <>
         <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
           <View style={{padding: SIZES.medium, paddingBottom: 100}}>
-              <InputComponent 
-                  userPhoto={inputValue.photo}
-                  firstName={inputValue.firstName} 
-                  lastName={inputValue.lastName}
-                  userAge={inputValue.age}
-                  handleInput={handleInput}
-                  onImageUpload={onImageUpload}
-              />
+          <InputComponent 
+            inputValue={inputValue}
+            handleInput={handleInput}
+            onImageUpload={onImageUpload}
+          />
           </View>
         </ScrollView>
       </>

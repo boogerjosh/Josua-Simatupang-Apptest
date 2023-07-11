@@ -24,6 +24,8 @@ const EditSection = () => {
       photo: '',
     })
 
+    const { photo, firstName, lastName, age } = inputValue;
+
     const onRefresh = () => {};
     
     useEffect(() => {
@@ -49,38 +51,28 @@ const EditSection = () => {
     };
 
     const handleInput = (key, value) => {
-        if (key !== 'age') {
-            const text = value.nativeEvent.text;
-            setInputValue(prevState => ({
-                ...prevState,
-                [key]: text
-            }));
-
-            if (text === '') {
-                setDisabledButton(true)
-            } else {
-                setDisabledButton(false)
-            }
-        } else {
-            setInputValue(prevState => ({
-                ...prevState,
-                ['age']: value
-            }));
-
-            if (value === '') {
-                setDisabledButton(true)
-            } else {
-                setDisabledButton(false)
-            }
-        }
+      let inputValueToUpdate = value;
+    
+      if (key !== 'age') {
+        const text = value.nativeEvent.text;
+        inputValueToUpdate = text;
+      }
+    
+      setInputValue(prevState => ({
+        ...prevState,
+        [key]: inputValueToUpdate
+      }));
+    
+      const isDisabled = inputValueToUpdate === '';
+      setDisabledButton(isDisabled);
     };
 
     const onSubmit = () => {
       let dataEdited = {
-        firstName: inputValue.firstName,
-        lastName: inputValue.lastName,
-        age: inputValue.age,
-        photo: inputValue.photo
+        firstName,
+        lastName,
+        age,
+        photo
       };
 
       dispatch(updateUserById(user?.id, dataEdited));
@@ -152,10 +144,7 @@ const EditSection = () => {
                   </Modal>
 
                  <InputComponent 
-                    userPhoto={inputValue.photo}
-                    firstName={inputValue.firstName} 
-                    lastName={inputValue.lastName}
-                    userAge={inputValue.age.toString()}
+                    inputValue={inputValue}
                     handleInput={handleInput} 
                     onImageUpload={onImageUpload}
                  />

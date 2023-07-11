@@ -8,12 +8,12 @@ import { COLORS } from '../../../constants';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from '../../config';
 
-const InputComponent = ({userPhoto, firstName, lastName, userAge, handleInput, onImageUpload}) => {
-  const [image, setImage] = useState(userPhoto);
+const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
+  const [image, setImage] = useState(inputValue.photo);
 
   useEffect(() => {
-    setImage(userPhoto);
-  }, [image, userPhoto])
+    setImage(inputValue.photo);
+  }, [image, inputValue.photo])
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -69,7 +69,7 @@ const InputComponent = ({userPhoto, firstName, lastName, userAge, handleInput, o
           <TextInput 
             style={styles.inputForm} 
             placeholder="First name" 
-            value={firstName}
+            value={inputValue.firstName}
             onChange={value => handleInput('firstName', value)} 
             placeholderTextColor={COLORS.gray}
           />
@@ -78,17 +78,17 @@ const InputComponent = ({userPhoto, firstName, lastName, userAge, handleInput, o
           <TextInput 
             style={styles.inputForm} 
             placeholder="Last name" 
-            value={lastName}
+            value={inputValue.lastName}
             onChange={value => handleInput('lastName', value)}
             placeholderTextColor={COLORS.gray}  
           />
         </View>
         <View style={styles.inputWrapper}>
           <TextInput 
-            keyboardType="phone-pad" 
+            keyboardType="numeric" 
             style={styles.inputForm} 
             placeholder="Age" 
-            value={userAge}
+            value={inputValue.age}
             onChangeText={(value) => handleInput('age', value)}
             placeholderTextColor={COLORS.gray} 
           />

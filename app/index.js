@@ -8,35 +8,36 @@ import {
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../store/usersActions";
-import styles from "../components/common/header/screenheader.style";
+import { setUsersSuccess } from "../store/usersReducer";
 
 const Home = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState("");
-    const [originalData, setOriginalData] = useState(null);
-    const [currentData, setCurrentData] = useState(null);
     const {users, isLoading, error} = useSelector((state) => state.users);
+    const [filteredContacts, setFilteredContacts] = useState([]);
 
     useEffect(() => {
-      dispatch(fetchUsers());
-      setOriginalData(users);
-      setCurrentData(users);
+        dispatch(fetchUsers());
     }, [dispatch]);
+    
+    useEffect(() => {
+        setFilteredContacts(users);
+    }, [users]);
 
     const handleInput = (value) => {
         const text = value.nativeEvent.text;
         setSearchTerm(text);
     };
-
+    
     const handleBtnSearch = () => {
         if (searchTerm) {
-          const filteredContact = originalData.filter((data) =>
-            data.firstName.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          setCurrentData(filteredContact);
+            const filteredContact = users.filter((data) =>
+                data.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredContacts(filteredContact);
         } else {
-          setCurrentData(originalData);
+            setFilteredContacts(users);
         }
     };
 
@@ -73,12 +74,12 @@ const Home = () => {
                        handleInput={handleInput}
                     /> 
                     
-                    {currentData && <Contacts
-                        users={currentData}
+                    {filteredContacts && <Contacts
+                        users={filteredContacts}
                         isLoading={isLoading}
                         error={error}
                     /> }
-                    {currentData?.length === 0 && <View 
+                    {filteredContacts?.length === 0 && <View 
                     style={{alignItems: 'center', justifyContent: 'center'}}>
                         <Image source={icons.datanotfound}/>
                         <Text style={{fontSize: SIZES.xLarge, fontFamily: FONT.bold}}>No data found</Text>

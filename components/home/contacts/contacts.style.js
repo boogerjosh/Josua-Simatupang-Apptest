@@ -26,6 +26,12 @@ const styles = StyleSheet.create({
     marginTop: SIZES.medium,
     gap: SIZES.small,
   },
+  abjadGrouping: {
+    fontSize: SIZES.medium, 
+    fontFamily: FONT.bold, 
+    textAlign: 'left', 
+    marginBottom: 5
+  }
 });
 
 export default styles;

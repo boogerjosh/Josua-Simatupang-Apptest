@@ -16,8 +16,20 @@ export const fetchUsers = () => async (dispatch) => {
     dispatch(setUsersStart());
     try {
       const response = await axios.request(options);
-      const sortByAbjad = 
-      dispatch(setUsersSuccess(response.data.data));
+      const sortByAbjad = response.data.data.sort((a, b) => {
+        const nameA = a.firstName.toLowerCase();
+        const nameB = b.firstName.toLowerCase();
+      
+        if (nameA < nameB) {
+          return -1; // Jika nameA lebih kecil dari nameB, urutan nameA lebih dahulu
+        }
+        if (nameA > nameB) {
+          return 1; // Jika nameA lebih besar dari nameB, urutan nameB lebih dahulu
+        }
+        return 0; // Jika nameA dan nameB sama, urutan tetap
+      });
+
+      dispatch(setUsersSuccess(sortByAbjad));
     } catch (error) {
       dispatch(setUsersFailure(error));
     }
