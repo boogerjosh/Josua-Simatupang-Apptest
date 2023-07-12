@@ -77,7 +77,7 @@ export const deleteUserById = (id) => async (dispatch) => {
     } catch (error) {
       console.log(error);
       alert(error);
-      dispatch(setUsersFailure(error));
+      // dispatch(setUsersFailure(error));
       // Alert.alert('Error', error);
     }
 };

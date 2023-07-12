@@ -23,7 +23,16 @@
       "bundleIdentifier": "com.Josua.AppTest"
     },
     "android": {
-      "package": "com.Josua.AppTest"
+      "package": "com.Josua.AppTest",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/13cac600-ae3e-41ae-a50d-404533cacdcb"
     }
   }
 }
