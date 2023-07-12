@@ -1,11 +1,11 @@
-import { View, ScrollView, SafeAreaView, Text, Image } from "react-native";
+import { View, ScrollView, SafeAreaView, Text, Image, RefreshControl } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
 import {COLORS, FONT, icons, SIZES } from '../constants';
 import {
     Contacts, ScreenHeaderBtn, SearchSection
 } from '../components';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../store/usersActions";
 
@@ -15,6 +15,7 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const {users, isLoading, error} = useSelector((state) => state.users);
     const [filteredContacts, setFilteredContacts] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         dispatch(fetchUsers());
@@ -40,6 +41,12 @@ const Home = () => {
         }
     };
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+            dispatch(fetchUsers());
+        setRefreshing(false);
+    }, [])
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.lightWhite}}>
             <Stack.Screen
@@ -60,7 +67,7 @@ const Home = () => {
                 }}
             />
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
                 <View
                     style={{
                         flex: 1,

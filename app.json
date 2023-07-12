@@ -28,9 +28,7 @@
         "android.permission.RECORD_AUDIO"
       ]
     },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
+    "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/13cac600-ae3e-41ae-a50d-404533cacdcb"
     }

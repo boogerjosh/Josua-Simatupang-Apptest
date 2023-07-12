@@ -47,8 +47,8 @@ export const fetchUsersById = (id) => async (dispatch) => {
         withCredentials: true
     };
 
-    dispatch(setUsersStart());
     try {
+      dispatch(setUsersStart());
       const response = await axios.request(optionsById);
       dispatch(setUsersSuccessById(response.data.data));
     } catch (error) {

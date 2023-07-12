@@ -5,7 +5,7 @@ import chevronLeft from '../assets/icons/chevron-left.png'
 import chevronRight from '../assets/icons/chevron-right.png'
 import add from '../assets/icons/add.png';
 import edit from '../assets/icons/edit.png';
-import datanotfound from '../assets/icons/datanotfound.png';
+import datanotfound from '../assets/icons/data-not-found.png';
 
 export default {
   menu,
