@@ -12,10 +12,10 @@ import { updateUserById, deleteUserById  } from '../../store/usersActions';
 const EditSection = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const [refreshing, setRefreshing] = useState(false);
     const [disabledButton, setDisabledButton] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const {user, isLoading, error} = useSelector((state) => state.users);
+    const [errorMessage, setErrorMessage] = useState([]);
     const [inputValue, setInputValue] = useState({
       firstName: '',
       lastName: '',
@@ -49,32 +49,64 @@ const EditSection = () => {
 
     const handleInput = (key, value) => {
       let inputValueToUpdate = value;
-    
+
       if (key !== 'age') {
         const text = value.nativeEvent.text;
         inputValueToUpdate = text;
+    
+        const errorMessageIndex = key === 'firstName' ? 0 : 1;
+        if (errorMessage[errorMessageIndex]) {
+          errorMessage[errorMessageIndex] = '';
+          setErrorMessage([...errorMessage]);
+        }
+      } else if (inputValueToUpdate !== '') {
+        if (errorMessage[2]) {
+          errorMessage[2] = '';
+          setErrorMessage([...errorMessage]);
+        }
       }
+
+      setInputValue(prevState => {
+        const updatedInputValue = {
+          ...prevState,
+          [key]: inputValueToUpdate
+        };
     
-      setInputValue(prevState => ({
-        ...prevState,
-        [key]: inputValueToUpdate
-      }));
+        if (updatedInputValue.firstName === '' && 
+           updatedInputValue.lastName === '' && 
+           updatedInputValue.age === '') {
+          setDisabledButton(true);
+        } else {
+          setDisabledButton(false);
+        }
     
-      const isDisabled = inputValueToUpdate === '';
-      setDisabledButton(isDisabled);
+        return updatedInputValue;
+      });
     };
 
     const onSubmit = () => {
-      let dataEdited = {
-        firstName,
-        lastName,
-        age,
-        photo
-      };
-
-      dispatch(updateUserById(user?.id, dataEdited));
-
-      setDisabledButton(true);
+      if (lastName === '' && age === '') {
+        setErrorMessage(['', 'Last name is required', 'Age is required']);
+      } else if (firstName === '' && lastName === '') {
+        setErrorMessage(['First name is required', 'Last name is required', '']);
+      } else if (firstName === '' && age === '') {
+        setErrorMessage(['First name is required', '', 'Age is required']);
+      } else if (firstName === '') {
+        setErrorMessage(['First name is required', '', '']);
+      } else if (lastName === '') {
+        setErrorMessage(['', 'Last name is required', ''])
+      } else if (age === '') {
+        setErrorMessage(['', '', 'Age is required'])
+      } else {
+        let dataEdited = {
+          firstName,
+          lastName,
+          age,
+          photo
+        };
+        
+        dispatch(updateUserById(user?.id, dataEdited));
+      }
     }
 
     const handleDelete = () => {
@@ -144,6 +176,7 @@ const EditSection = () => {
                     inputValue={inputValue}
                     handleInput={handleInput} 
                     onImageUpload={onImageUpload}
+                    errorMessage={errorMessage}
                  />
 
                  <DeleteButton onHandle={() => setModalVisible(true)}/>

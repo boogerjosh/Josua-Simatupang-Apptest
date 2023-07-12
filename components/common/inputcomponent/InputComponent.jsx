@@ -9,7 +9,7 @@ import { COLORS } from '../../../constants';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from '../../config';
 
-const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
+const InputComponent = ({inputValue, handleInput, onImageUpload, errorMessage}) => {
   const [image, setImage] = useState(inputValue.photo);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
       </TouchableOpacity>
 
       <View style={styles.inputContainer}>
-        <View style={styles.inputWrapper}>
+        <View style={styles.inputWrapper(errorMessage[0])}>
           <TextInput 
             style={styles.inputForm} 
             placeholder="First name" 
@@ -85,7 +85,8 @@ const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
             placeholderTextColor={COLORS.gray}
           />
         </View>
-        <View style={styles.inputWrapper}>
+        {errorMessage[0] && <Text style={{color: COLORS.red, marginTop: 5}}>{errorMessage[0]}</Text>}
+        <View style={styles.inputWrapper(errorMessage[1])}>
           <TextInput 
             style={styles.inputForm} 
             placeholder="Last name" 
@@ -94,7 +95,8 @@ const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
             placeholderTextColor={COLORS.gray}  
           />
         </View>
-        <View style={styles.inputWrapper}>
+        {errorMessage[1] && <Text style={{color: COLORS.red, marginTop: 5}}>{errorMessage[1]}</Text>}
+        <View style={styles.inputWrapper(errorMessage[2])}>
           <TextInput 
             keyboardType="numeric" 
             style={styles.inputForm} 
@@ -104,6 +106,7 @@ const InputComponent = ({inputValue, handleInput, onImageUpload}) => {
             placeholderTextColor={COLORS.gray} 
           />
         </View>
+        {errorMessage[2] && <Text style={{color: COLORS.red, marginTop: 5}}>{errorMessage[2]}</Text>}
       </View>
     </View>
   )

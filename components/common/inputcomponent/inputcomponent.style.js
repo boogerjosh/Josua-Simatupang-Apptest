@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
         fontFamily: FONT.regular,
         width: "100%",
         height: "100%",
-        paddingHorizontal: SIZES.medium,
+        paddingHorizontal: SIZES.medium
     },
-    inputWrapper: {
+    inputWrapper: (errorMessage) => ({
         width: '100%',
         flex: 1,
         backgroundColor: COLORS.white,
@@ -45,9 +45,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: SIZES.medium,
+        borderColor: errorMessage ? COLORS.red : '#FFF',
+        borderWidth: errorMessage ? 1 : 0,
         marginTop: SIZES.small,
         height: 50,
-    },
+    }),
     inputContainer:{
         width: '100%',
         flex: 1,

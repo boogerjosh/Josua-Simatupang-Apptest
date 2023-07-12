@@ -76,7 +76,7 @@ export const deleteUserById = (id) => async (dispatch) => {
       }
     } catch (error) {
       console.log(error);
-      alert(error);
+      alert("400. That's an error for illegal request.");
       // dispatch(setUsersFailure(error));
       // Alert.alert('Error', error);
     }
@@ -104,7 +104,7 @@ export const updateUserById = (id, payload) => async (dispatch) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(setUsersFailure(error));
+      alert("400. That's an error for illegal request.");
     }
 };
 
@@ -128,7 +128,7 @@ export const createNewContact = (payload) => async (dispatch) => {
       }
     } catch (error) {
       console.log(error);
-      dispatch(setUsersFailure(error));
+      alert("400. That's an error for illegal request.");
     }
 };
 
