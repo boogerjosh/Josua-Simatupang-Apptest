@@ -30,8 +30,7 @@ Like `npm start` / `yarn start`, but also attempts to open your app on a connect
 
 Since i use EXPO here my barcode that you can scan to use the app:
 
-<img width="488" alt="Screenshot 2023-07-12 at 10 27 50" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/951da838-58d5-499a-bec6-db561fe9e64b">
-<img width="486" alt="Screenshot 2023-07-12 at 10 28 41" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/94935c16-0662-4125-8a42-f736e831ca32">
+<img width="491" alt="Screenshot 2023-07-12 at 08 38 19" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/d70e272b-9197-4903-8449-37d9a98a1b9e">
 
 
 
