@@ -1,4 +1,4 @@
-# Contacts-App-React-Native
+<img width="483" alt="Screenshot 2023-07-12 at 21 14 35" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/41e76c5e-ec56-4cb6-b4f3-29e2b206e392"># Contacts-App-React-Native
 
 ![Untitled design (1)](https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/eed44685-0606-4e95-ae65-9123d201f08d)
 
@@ -30,8 +30,9 @@ Like `npm start` / `yarn start`, but also attempts to open your app on a connect
 
 Since i use EXPO here my barcode that you can scan to use the app:
 
-<img width="482" alt="Screenshot 2023-07-12 at 14 10 23" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/79d5d1f0-2f90-40fc-a127-84044306c058">
-<img width="477" alt="Screenshot 2023-07-12 at 14 10 34" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/6ce78b87-1796-460d-900b-8d847d2624d2">
+<img width="484" alt="Screenshot 2023-07-12 at 21 13 51" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/2e07a303-1d10-4b0c-9d14-74c2a8c1bfe1">
+<img width="484" alt="Screenshot 2023-07-12 at 21 14 35" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/503a2e19-de0e-4114-a39c-2069c36fa22c">
+
 
 
 
