@@ -1,4 +1,4 @@
-<img width="483" alt="Screenshot 2023-07-12 at 21 14 35" src="https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/41e76c5e-ec56-4cb6-b4f3-29e2b206e392"># Contacts-App-React-Native
+# Contacts-App-React-Native
 
 ![Untitled design (1)](https://github.com/boogerjosh/Josua-Simatupang-Apptest/assets/94213206/eed44685-0606-4e95-ae65-9123d201f08d)
 
