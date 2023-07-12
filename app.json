@@ -13,6 +13,17 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "13cac600-ae3e-41ae-a50d-404533cacdcb"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.Josua.AppTest"
+    },
+    "android": {
+      "package": "com.Josua.AppTest"
+    }
   }
 }

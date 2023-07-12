@@ -71,12 +71,13 @@ export const deleteUserById = (id) => async (dispatch) => {
     try {
       const response = await axios.request(optionsById);
       if (response) {
+          dispatch(fetchUsers());
           router.push('/');
       }
     } catch (error) {
       console.log(error);
       alert(error);
-      // dispatch(setUsersFailure(error));
+      dispatch(setUsersFailure(error));
       // Alert.alert('Error', error);
     }
 };
